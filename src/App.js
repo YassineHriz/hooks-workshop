@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
-
+import './App.css'
+import CardList from './components/cardList'
+import Search from './components/search'
+import {useState} from 'react'
+import AddMovie from './components/addMovie'
+import data from './data'
 function App() {
+  const[search,setSearch] = useState("")
+  const[showAddMovie,setShowAddMovie] = useState(false)
+  const[movie,setMovie] = useState(data)
+  const addNewFilm = (film) =>
+  {
+    setMovie([...movie,film])
+  }
+  const addMovieHandler = () =>
+  {
+    setShowAddMovie(!showAddMovie)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="appCore">
+        <Search 
+        search={search}
+        setSearch={setSearch}
+        />
+        <CardList
+        search={search}
+        setSearch={setSearch}
+        />
+      </div>
+      {
+      showAddMovie ? <AddMovie
+      showAddMovie = {showAddMovie}
+      setShowAddMovie = {setShowAddMovie}
+      addNewFilm = {addNewFilm}
+      /> :
+      <i className="fa-solid fa-plus addBtn"
+      onClick={addMovieHandler}
+      ></i> 
+      }
     </div>
   );
 }
